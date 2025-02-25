@@ -1,0 +1,47 @@
+<html>
+<head><title>Leaflet Essentials</title>
+      <link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css"/>
+</head>
+<body>
+<script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js"></script>
+<div id="mapid" style="width: 600px; height: 400px; margin: auto"></div>
+<script>
+      var mymap = L.map('mapid',{center: [40.02878979603772, -99.83094173353822], zoom: 4});
+      L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png').addTo(mymap);
+
+      var marker = L.marker([40.791214569043134, -73.95537452824071], {autoPan: true, keyboard: true}).addTo(mymap).bindPopup("Hi, from New York");
+
+      var marker2 = L.marker([41.881141974688056, -87.65406022820768], {autoPan: true}).addTo(mymap).bindPopup("Hi, from Chicago");
+
+      var polyline = L.polyline([[47.579474399973066, -122.29247683495878],[46.951063550764026, -119.97318340470237],[47.110285277953714, -119.8230133264843], [47.10460696638927, -118.41308314765935], [47.70875300193959, -116.97812462246475],
+      [46.5164949497102, -112.79839073767086], [46.00313861974223, -112.66490622369928], [45.59599736534059, -109.10253819506259], [45.718452128152656, -107.55078068265003], [44.33882069748862, -106.63307463872265], [44.0876745516055, -103.16247727546123],
+      [43.67275264740447, -92.75068501020648], [43.94368163430348, -92.34188868616849], [43.52775476921991, -89.6555127924638]], {color:'purple', weight:3, noClip: true, smoothFactor: 1.0}).addTo(mymap).bindPopup("This is I-90 up to Milwaukee");
+
+      var polyline2 = L.polyline([[47.569966804140954, -108.33667751396295], [47.557983284665504, -107.91932916345975], [47.399944564547226, -107.91340932870085],
+      [47.6557684783899, -107.63221717765259], [47.60190945436519, -107.43390271322907], [47.69961257628666, -107.39246386991671], [47.97973893342888, -106.38609196090191],
+      [47.56796974126702, -106.23217625717022]], {color:'red', weight:3, noClip: true, smoothFactor: 1.0}).addTo(mymap).bindPopup("This is the Missouri River!");
+
+      var mypolygon = L.polygon([[[48.974377063437224, -104.01201240072608],[45.93939465205466, -104.03850461172007],[45.95781477476332, -96.5544550059147],[48.974377063437224, -97.23000638626172]]],{color:'blue', weight:3, fillColor:'white', fillOpacity:1, smoothFactor: 10.0}).addTo(mymap).bindPopup("North Dakota");
+      var mypolygon = L.polygon([[[44.99727963219202, -111.03105688028123],[41.00621860188107, -111.04585435529631],[40.99505091339298, -104.0318511981445],[44.976348027240746, -104.06144614817468]]],{color:'blue', weight:3, fillColor:'white', fillOpacity:1, smoothFactor: 10.0}).addTo(mymap).bindPopup("Wyoming");
+
+
+</script>
+<p>
+  For my points, I chose the options autoPan and keyboard. I picked autoPan because it helps
+  focus the viewer on the marker selected by zooming to that location. I picked keyboard because
+  it allows for other ways to access points on the map without the trackpad, or a mouse.
+</p>
+<p>
+  For the polylines, I felt like my choices for options not discussed in class were pretty limited,
+  so I used both the smoothFactor option and the noClip option. I honestly tried several values
+  in both options, for example I changed the smoothFactor from 1.0-10.0 and noticed no difference
+  so I will say I am not entirely certain what they do. The documentation offers an explanation
+  for the options though, smoothFactor lets the webmap know how to simplify the object based on the zoom level,
+  while noClip, when set to true, makes sure the entire polyline is visible even if it goes beyond map view.
+</p>
+<p>
+  Finally, for my polygons, the additional option I chose was smoothFactor. The lower the smoothFactor
+  the smoother the outline will be, the higher it is the less smooth the object will be.
+</p>
+</body>
+</html>
