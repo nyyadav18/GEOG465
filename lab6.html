@@ -1,0 +1,48 @@
+<!--declares the document type-->
+<!DOCTYPE html><html>
+<!--gives map a title which appears in browser panel-->
+<head><title>My Comfortable Zone</title>
+<!--link to external CSS stylesheet-->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.2/dist/leaflet.css"/>
+</head>
+<body>
+<!--imports Leaflet JS library-->
+<script src="https://unpkg.com/leaflet@1.0.2/dist/leaflet.js"></script>
+<!--creates map container-->
+<div id="mapid" style="width: 600px; height: 400px; margin: auto"></div>
+<script>
+//creates a variable to hold the Leaflet map centered on UW campus with zoom level 16
+var mymap = L.map('mapid').setView([47.656896, -122.307511],16);
+//adds OpenStreetMap tile layer as base map
+L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png').addTo(mymap);
+//creates a variable to hold geoJSON data
+var myZoneUW = {"type":"FeatureCollection","features":[{"type":"Feature","properties":{"name":"Fritz Hedges Waterway Park","popupContents":"south west end of campus","academicbuilding":"no"},"geometry":{"coordinates":[[[-122.31716446676694,47.65285761488215],[-122.31746164464333,47.65268412074272],[-122.3166097347312,47.6520835596566],[-122.31618377977512,47.65179662247712],[-122.31458892517225,47.65150301070821],[-122.31439080658797,47.65168318176194],[-122.31716446676694,47.65285761488215]]],"type":"Polygon"}},{"type":"Feature","properties":{"name":"The Quad","popupContents":"place of iconic UW images","academicbuilding":"no"},"geometry":{"coordinates":[[[-122.30848411569545,47.65696792863852],[-122.30768547118461,47.65641427814384],[-122.30604154598717,47.65754120594315],[-122.3067410886243,47.65808306500614],[-122.30848411569545,47.65696792863852]]],"type":"Polygon"}},{"type":"Feature","properties":{"name":"Condon Hall","popupContents":"previously housed the School of Law","academicbuilding":"yes"},"geometry":{"coordinates":[[[-122.31652194599573,47.65679131887242],[-122.31652934105632,47.656442641300345],[-122.31568260664812,47.65643018848667],[-122.31568260664812,47.65679380941856],[-122.31652194599573,47.65679131887242]]],"type":"Polygon"}}]}
+//creates a variable for the geojsonlayer with myZoneUW as the data source
+var geojsonLayer=L.geoJSON(myZoneUW, {style:styleFunction, onEachFeature: happenHover}).addTo(mymap);
+            //creates a function that makes all features purple before
+            //mouse hovers over any features
+            function styleFunction() {return {color: "purple"}; }
+            //creates a function that changes all features to blue
+            function newStyle(){geojsonLayer, geojsonLayer.setStyle({color:"blue"});}
+            //creates a function that changes all features to green
+            function oldStyle(){geojsonLayer.setStyle({color:"green"});}
+            //creates a function with two arguments
+            function happenHover(feature,layer){
+            //binds a popup to the layer that displays the feature name and popupContents
+            layer.bindPopup(feature.properties.name + '<br>' +
+                   feature.properties.popupContents, {closeButton: false});
+                    //creates an event listener to open the popup when mouse is over a feature
+                    layer.on('mouseover', function(){layer.openPopup();});
+                    //event listener that changes the color of
+                    //all features to blue when mouse is over a feature
+                    layer.on('mouseover', newStyle);
+                    //event listener that reverts feature color to green when mouse
+                    //is no longer hovering over a feature
+                    layer.on('mouseout', oldStyle);
+                    //event listener that detects when mouse is no longer hovering
+                    //over a feature to close the popup associated
+                    layer.on('mouseout', function() {layer.closePopup();});}
+
+</script>
+</body>
+</html>
